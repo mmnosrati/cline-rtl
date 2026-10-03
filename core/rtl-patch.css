@@ -1,0 +1,30 @@
+/* CLINE-RTL-PRO:START */
+body {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+.markdown-body,
+.inline-markdown-block {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Keep source code and terminal-like content readable. */
+pre,
+code,
+pre *,
+code *,
+.hljs,
+.hljs * {
+  direction: ltr !important;
+  text-align: left !important;
+}
+/* CLINE-RTL-PRO:END */
