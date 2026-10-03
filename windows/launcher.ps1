@@ -1,13 +1,13 @@
 $ErrorActionPreference = 'Stop'
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
 $PatchFile = Join-Path $ProjectRoot 'core\rtl-patch.css'
-$MarkerStart = '/* CLINE-RTL-PRO:START */'
-$MarkerEnd = '/* CLINE-RTL-PRO:END */'
+$MarkerStart = '/* Cline RTL:START */'
+$MarkerEnd = '/* Cline RTL:END */'
 
 function Write-Title {
     Clear-Host
     Write-Host ''
-    Write-Host '  Cline RTL Pro' -ForegroundColor Cyan
+    Write-Host '  Cline RTL' -ForegroundColor Cyan
     Write-Host '  RTL layout patch manager' -ForegroundColor DarkCyan
     Write-Host ''
     Write-Host '  GitHub  https://github.com/mmnosrati' -ForegroundColor Blue
@@ -35,7 +35,7 @@ function Get-ClineCss {
     }
     $results | Sort-Object FullName -Unique
 }
-function Get-BackupPath([string]$Path) { return "$Path.cline-rtl-pro.bak" }
+function Get-BackupPath([string]$Path) { return "$Path.Cline RTL.bak" }
 function Install-Patch {
     $cssFiles = @(Get-ClineCss)
     if ($cssFiles.Count -eq 0) {
@@ -51,7 +51,7 @@ function Install-Patch {
     foreach ($file in $cssFiles) {
         $content = Get-Content -LiteralPath $file.FullName -Raw
         if ($content.Contains($MarkerStart)) {
-            $content = [regex]::Replace($content, '(?s)/\* CLINE-RTL-PRO:START \*/.*?/\* CLINE-RTL-PRO:END \*/', '')
+            $content = [regex]::Replace($content, '(?s)/\* Cline RTL:START \*/.*?/\* Cline RTL:END \*/', '')
         } else {
             $backup = Get-BackupPath $file.FullName
             if (-not (Test-Path $backup)) { Copy-Item -LiteralPath $file.FullName -Destination $backup }
@@ -65,11 +65,11 @@ function Restore-Backups {
     $roots = @("$HOME\.vscode\extensions", "$HOME\.vscode-insiders\extensions", "$HOME\.vscode-oss\extensions")
     $backups = @()
     foreach ($root in $roots) {
-        if (Test-Path $root) { $backups += Get-ChildItem -LiteralPath $root -Recurse -File -Filter '*.css.cline-rtl-pro.bak' -ErrorAction SilentlyContinue }
+        if (Test-Path $root) { $backups += Get-ChildItem -LiteralPath $root -Recurse -File -Filter '*.css.Cline RTL.bak' -ErrorAction SilentlyContinue }
     }
     if ($backups.Count -eq 0) { Write-Host 'No backups found.' -ForegroundColor Yellow; return }
     foreach ($backup in $backups) {
-        $target = $backup.FullName -replace '\.cline-rtl-pro\.bak$',''
+        $target = $backup.FullName -replace '\.Cline RTL\.bak$',''
         Copy-Item -LiteralPath $backup.FullName -Destination $target -Force
         Write-Host "Restored: $target" -ForegroundColor Green
     }

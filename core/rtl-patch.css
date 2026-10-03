@@ -1,4 +1,4 @@
-/* CLINE-RTL-PRO:START */
+/* Cline RTL:START */
 body {
   direction: rtl !important;
   text-align: right !important;
@@ -27,4 +27,4 @@ code *,
   direction: ltr !important;
   text-align: left !important;
 }
-/* CLINE-RTL-PRO:END */
+/* Cline RTL:END */

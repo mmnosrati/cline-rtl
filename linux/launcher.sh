@@ -3,8 +3,8 @@ set -euo pipefail
 
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 PATCH_FILE="$ROOT/core/rtl-patch.css"
-START='/* CLINE-RTL-PRO:START */'
-END='/* CLINE-RTL-PRO:END */'
+START='/* Cline RTL:START */'
+END='/* Cline RTL:END */'
 
 cyan=$'\033[1;36m'; green=$'\033[1;32m'; yellow=$'\033[1;33m'; magenta=$'\033[1;35m'; blue=$'\033[1;34m'; reset=$'\033[0m'
 
@@ -26,11 +26,11 @@ find_css() {
 restore_backups() {
   local found=0 backup target
   while IFS= read -r -d '' backup; do
-    target="${backup%.cline-rtl-pro.bak}"
+    target="${backup%.Cline RTL.bak}"
     cp -p -- "$backup" "$target"
     printf '%bRestored:%b %s\n' "$green" "$reset" "$target"
     found=1
-  done < <(find "$HOME/.vscode" "$HOME/.vscode-insiders" "$HOME/.vscode-oss" "$HOME/.vscode-server" "$HOME/.vscode-server-insiders" -type f -name '*.css.cline-rtl-pro.bak' -print0 2>/dev/null || true)
+  done < <(find "$HOME/.vscode" "$HOME/.vscode-insiders" "$HOME/.vscode-oss" "$HOME/.vscode-server" "$HOME/.vscode-server-insiders" -type f -name '*.css.Cline RTL.bak' -print0 2>/dev/null || true)
   (( found )) || echo "No backups found."
 }
 install_patch() {
@@ -48,7 +48,7 @@ install_patch() {
   local file backup temp patch
   patch="$(cat "$PATCH_FILE")"
   for file in "${css_files[@]}"; do
-    backup="$file.cline-rtl-pro.bak"
+    backup="$file.Cline RTL.bak"
     [[ -f "$backup" ]] || cp -p -- "$file" "$backup"
     temp="$(mktemp)"
     # Remove an older managed block before adding the current patch.
@@ -66,7 +66,7 @@ install_patch() {
 }
 while true; do
   clear
-  printf '%bCline RTL Pro%b\n' "$cyan" "$reset"
+  printf '%bCline RTL%b\n' "$cyan" "$reset"
   printf 'RTL layout patch manager\n\n'
   printf '%bGitHub%b   https://github.com/mmnosrati\n' "$blue" "$reset"
   printf '%bTelegram%b https://t.me/mmn_dev\n' "$magenta" "$reset"

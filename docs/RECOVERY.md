@@ -5,4 +5,4 @@
 3. Choose **Restore original CSS from backups**.
 4. Restart VS Code.
 
-Backups use the suffix `.cline-rtl-pro.bak` and are retained after restoration. Do not delete them until the extension works normally.
+Backups use the suffix `.Cline RTL.bak` and are retained after restoration. Do not delete them until the extension works normally.

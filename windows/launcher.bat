@@ -1,6 +1,6 @@
 @echo off
 setlocal
-title Cline RTL Pro
+title Cline RTL
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0launcher.ps1"
 if errorlevel 1 (
   echo.
